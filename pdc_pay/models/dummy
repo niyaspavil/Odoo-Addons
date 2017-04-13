@@ -1,0 +1,19 @@
+#
+# for inv in self.related_inv_ids:
+#     self.name = self.env['ir.sequence'].with_context(ir_sequence_date=self.payment_date).next_by_code('sequence_code')
+#     print "llllLL", self.name
+#
+#     pdc_payment_vals = {
+#         'name': self.name,
+#         'state': 'posted',
+#         'payment_type': 'inbound',
+#         'journal_id': 1,
+#         'amount': self.amount,
+#         'payment_method_id': self.payment_method_id.id,
+#         'payment_date': self.payment_date,
+#         'partner_type': self.partner_type,
+#     }
+#
+#     print"haiiiiiiiiiiiii", pdc_payment_vals
+#     # register_payment.create(self._cr, self._uid, pdc_payment_vals)
+#     print " noocreated"

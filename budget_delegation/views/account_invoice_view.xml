@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_invoice_line_tree" model="ir.ui.view">
+            <field name="name">account.invoice.line.tree</field>
+            <field name="model">account.invoice.line</field>
+            <field name="inherit_id" ref="account.view_invoice_line_tree"/>
+            <field name="arch" type="xml">
+                <field name="account_id" position="after">
+                    <field name="delegation_id"/>
+                    <field name="department_id"/>
+                    <field name="section_id"/>
+                </field>
+
+            </field>
+        </record>
+
+
+        <record id="invoice_supplier_form" model="ir.ui.view">
+            <field name="name">account.invoice.supplier.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/group" position="after">
+                    <group col="6">
+                        <field name="delegation_id"/>
+                        <field name="department_id"/>
+                        <field name="section_id"/>
+                        <button class="btn oe_button oe_highlight oe_right" colspan="5" name="add_in_lines" string="Confirm" type="object"/>
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='account_id']" position="after">
+                    <field name="delegation_id"/>
+                        <field name="department_id"/>
+                        <field name="section_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="invoice_form" model="ir.ui.view">
+            <field name="name">account.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/group" position="after">
+                    <group col="6">
+                        <field name="delegation_id"/>
+                        <field name="department_id"/>
+                        <field name="section_id"/>
+                        <button class="btn oe_button oe_highlight oe_right" colspan="5" name="add_in_lines" string="Confirm" type="object"/>
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='account_id']" position="after">
+                    <field name="delegation_id"/>
+                        <field name="department_id"/>
+                        <field name="section_id"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

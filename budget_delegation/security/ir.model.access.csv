@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_delegation,access_res_delegation,model_res_delegation,,1,1,1,1
+access_res_department,access_res_department,model_res_department,,1,1,1,1
+access_res_section,access_res_section,model_res_section,,1,1,1,1

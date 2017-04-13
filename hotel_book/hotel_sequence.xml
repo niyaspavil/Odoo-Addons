@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <!-- Sequences for sale.order -->
+        <record id="seq_type_hotel_book" model="ir.sequence.type">
+            <field name="name">Hotel Book</field>
+            <field name="code">hotel.book</field>
+        </record>
+
+        <record id="seq_hotel_book" model="ir.sequence">
+            <field name="name">Hotel Book</field>
+            <field name="code">hotel.book</field>
+            <field name="prefix">RN/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record model="ir.sequence.type" id="seq_type_hotel_folio">
+            <field name="name">Hotel Folio</field>
+            <field name="code">hotel.folio</field>
+        </record>
+        <record model="ir.sequence" id="seq_hotel_folio">
+            <field name="name">Hotel Folio</field>
+            <field name="code">hotel.folio</field>
+            <field name="prefix">FN/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</openerp>

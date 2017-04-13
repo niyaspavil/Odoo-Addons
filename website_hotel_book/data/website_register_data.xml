@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="action_open_website" model="ir.actions.act_url">
+            <field name="name">Booking Cart</field>
+            <field name="target">self</field>
+            <field name="url">/cart/confirmation/</field>
+        </record>
+
+        <record id="menu_cart" model="website.menu">
+            <field name="name">Booking Cart</field>
+            <field name="url">/cart/confirmation/</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence" type="int">60</field>
+        </record>
+
+        <record id="base.open_menu" model="ir.actions.todo">
+            <field name="action_id" ref="action_open_website"/>
+            <field name="state">open</field>
+        </record>
+
+    </data>
+</openerp>

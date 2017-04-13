@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+     <openerp>
+        <data>
+
+            <record id="view_hotel_document_tree" model="ir.ui.view">
+                <field name="name">hotel.document.tree</field>
+                <field name="model">hotel.document</field>
+                <field name="arch" type="xml">
+                    <tree string="Document Type" color="BLUE">
+                        <field name="doc_type"/>
+                        <field name="doc_code"/>
+                    </tree>
+                </field>
+            </record>
+
+            <record id="view_hotel_document_form" model="ir.ui.view">
+                <field name="name">hotel.document.form</field>
+                <field name="model">hotel.document</field>
+                <field name="arch" type="xml">
+                    <form string="Document Type" version="7.0">
+                        <sheet>
+                            <group>
+                                <field name="doc_type"/>
+                                <field name="doc_code"/>
+                            </group>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+
+            <record id="action_doc_type" model="ir.actions.act_window">
+                <field name="name">Document Types</field>
+                <field name="res_model">hotel.document</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="search_view_id" eval="False"/>
+                <field name="context">{}</field>
+                <field name="help" type="html">
+                    <p class="oe_view_nocontent_create">
+                         Click to add Document Types(eg: Vat Code, Passport, Driving Licence,etc)
+                    </p>
+                </field>
+            </record>
+
+            <menuitem id="menu_doc_base" parent="menu_doc_form_main" sequence="1" name="Document Types" action="action_doc_type"/>
+
+
+
+            <record id="view_customer_gender_tree" model="ir.ui.view">
+                <field name="name">customer.gender.tree</field>
+                <field name="model">customer.gender</field>
+                <field name="arch" type="xml">
+                    <tree string="Customer Gender" color="BLUE">
+                        <field name="gender_type"/>
+                    </tree>
+                </field>
+            </record>
+
+            <record id="view_customer_gender_form" model="ir.ui.view">
+                <field name="name">customer.gender.form</field>
+                <field name="model">customer.gender</field>
+                <field name="arch" type="xml">
+                    <form string="Customer Gender" version="7.0">
+                        <sheet>
+                            <group>
+                                <field name="gender_type"/>
+                            </group>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+
+            <record id="action_gender_type" model="ir.actions.act_window">
+                <field name="name">Customer Gender</field>
+                <field name="res_model">customer.gender</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="search_view_id" eval="False"/>
+                <field name="context">{}</field>
+                <field name="help" type="html">
+                    <p class="oe_view_nocontent_create">
+                         Click to add Gender Type(eg. Male, Female, etc..)
+                    </p>
+                </field>
+            </record>
+
+
+            <menuitem id="menu_gender_base" parent="menu_doc_form_main" sequence="2" name="Gender" action="action_gender_type"/>
+
+        </data>
+     </openerp>

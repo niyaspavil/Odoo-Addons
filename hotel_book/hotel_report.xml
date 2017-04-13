@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report
+            id="report_booking_document"
+            string="Reservation Order"
+            model="hotel.book"
+            report_type="qweb-pdf"
+            file="hotel_book.book_report_view"
+            name="hotel_book.book_report_view"
+        />
+
+        <report
+            id="report_folio_document"
+            string="Folio Order"
+            model="hotel.folio"
+            report_type="qweb-pdf"
+            file="hotel_book.folio_report_view"
+            name="hotel_book.folio_report_view"
+        />
+
+      </data>
+</openerp>

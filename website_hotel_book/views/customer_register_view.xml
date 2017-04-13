@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<template id="hotel_register" inherit_id="website.assets_frontend" name="Shop">
+  <xpath expr="." position="inside">
+      <link href="/website_hotel_book/static/src/css/count_down.css" rel='stylesheet' type='text/css'/>
+      <script type="text/javascript" src="/website_hotel_book/static/src/js/validate.js"></script>
+      <script type="text/javascript" src="/website_hotel_book/static/src/js/cancelcart.js"></script>
+      <script type="text/javascript" src="/website_hotel_book/static/src/js/timer.jquery.js"></script>
+
+
+  </xpath>
+</template>
+        <!-- Layout add nav and footer -->
+<template id="register_form" inherit_id="web.login" name="Login">
+    <xpath expr="//form/div/button[@type='submit']" position="after">
+        <!--<a t-attf-href="/web/reset_password?{{ keep_query() }}" class="btn btn-link pull-right">Reset Password</a>-->
+        <br/>
+        <a href="/register" style="float: right;">Registration Now</a>
+        <br/>
+    </xpath>
+</template>
+
+<template id="menu_logout" inherit_id="website.layout" name="Main layout">
+    <xpath expr="//html/body/div/header/div/div/div/ul/li/ul[@class='dropdown-menu js_usermenu']" position="replace">
+        <t t-if="user_id">
+            <ul class="dropdown-menu js_usermenu" role="menu">
+                <li t-if="user_id.partner_id.customer==False"><a href="/web" role="menuitem">My Account</a></li>
+                <li class="divider"/>
+                <li><a t-attf-href="/web/session/logout?redirect=/" role="menuitem">Logout</a></li>
+            </ul>
+        </t>
+    </xpath>
+</template>
+
+<template id="menu_layout" inherit_id="website.user_navbar" name="Main layout">
+    <xpath expr="//t[@t-if='website and menu_data']" position="replace">
+        <t t-if="user_id">
+        <nav t-if="user_id.partner_id.customer==False" id="oe_main_menu_navbar" class="navbar navbar-inverse" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#oe_applications">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <ul id="oe_applications" class="nav navbar-nav navbar-left navbar-collapse collapse">
+                <li class="dropdown active">
+                    <a href="#" class="dropdown-toggle hidden-xs" data-toggle="dropdown"><i class="fa fa-th-large"></i> Website<b class="caret"/></a>
+                    <ul class="dropdown-menu">
+                        <li t-foreach="menu_data['children']" t-as="menu">
+                            <t t-call="web.menu_link"/>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <ul id="oe_editzone" class="nav navbar-nav hidden-xs" style="padding-left: 20px;" groups="base.group_website_publisher">
+                <li><button type="button" data-action="edit" class="btn btn-primary btn-xs" style="display: none;">Edit</button></li>
+            </ul>
+
+            <ul id="oe_systray" class="nav navbar-nav navbar-right pull-right hidden-xs">
+                <!-- Mobile -->
+                <li>
+                    <a data-action="show-mobile-preview" href="#">
+                        <span title="Mobile preview"><i class="fa fa-mobile"/></span>
+                    </a>
+                </li>
+
+                <!-- Promote -->
+                <li groups="base.group_website_designer">
+                    <a data-action="promote-current-page" href="#">
+                        <span title="Promote page on the web">Promote</span>
+                    </a>
+                </li>
+
+                <!-- Content -->
+                <li class="dropdown" groups="base.group_website_publisher">
+                    <a id="content-menu-button" class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        Content <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu oe_content_menu" role="menu">
+                        <li groups="base.group_website_designer"><a data-action="edit_menu" href="#"><span title="Edit Top Menu">Edit Menu</span></a></li>
+                        <li class="divider" groups="base.group_website_designer"> </li>
+                        <li groups="base.group_website_designer"><a href="#" data-action="new_page">New Page</a></li>
+                    </ul>
+                </li>
+
+                <!-- Customize -->
+                <li class="dropdown" id="customize-menu" groups="base.group_website_designer">
+                    <a id="customize-menu-button" class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        Customize <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#advanced-view-editor" data-action='ace'>HTML Editor</a></li>
+                        <li><a href="/page/website.themes">Change Theme</a></li>
+                        <li><a href="/web#return_label=Website&amp;action=website.action_module_website">Install Apps</a></li>
+                        <li class="divider"></li>
+                    </ul>
+                </li>
+
+                <!-- Help -->
+                <li class="dropdown">
+                    <a id="help-menu-button" class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        Help <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" id="help-menu">
+                        <li class="dropdown-header">HELP &amp; TUTORIALS</li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        </t>
+    </xpath>
+</template>
+
+<template id="register" >
+  <t t-call="website.layout">
+    <div id="wrap">
+      <div class="container oe_website_sale">
+          <h3>Registration Form</h3>
+          <br/>
+          <form id="myform" action="/register/confirm" method="post">
+              <div class="row">
+              <div class="col-md-9" id="middle_column">
+                  <div t-attf-class="form-group #{error.get('name') and 'has-error' or ''} col-lg-6">
+                      <label class="control-label" for="contact_name">Your Name</label>
+                      <input type="text" name="name" class="form-control" required="True" t-att-value="register.get('name')"/>
+                  </div>
+                  <div t-attf-class="form-group  #{error.get('street2') and 'has-error' or ''} col-lg-6">
+                      <label class="control-label" for="street2" >Company Name</label>
+                      <input type="text" name="street2" class="form-control" t-att-value="register.get('street2')"/>
+                  </div>
+                  <br/><br/>
+                  <div t-attf-class="form-group #{error.get('email') and 'has-error' or ''} col-lg-6">
+                      <label class="control-label" for="contact_name">Email</label>
+                      <input type="email" placeholder="e.g. someone@abcd.com" name="email" id="email" required="True" class="form-control" t-att-value="register.get('email')"/>
+                      <label style="font-weight: normal; color:RED" t-if="email_val.get('email')">Email already exists, login or reset your password
+                                              <a t-attf-href="/web/login?{{ keep_query() }}" class="btn btn-link pull-right">Back to Login</a>
+                      </label>
+                  </div>
+                  <div t-attf-class="form-group #{error.get('pwd') and 'has-error' or ''} col-lg-6">
+                      <label class="control-label" for="contact_name">Password</label>
+                      <input type="password" name="pwd" id="pwd" required="True" class="form-control" t-att-value="register.get('pwd')"/>
+                  </div>
+                  <br/><br/>
+                  <div t-attf-class="form-group #{error.get('phone') and 'has-error' or ''} col-lg-6">
+                      <label class="control-label" for="phone">Phone</label>
+                      <input type="tel" placeholder="e.g. +34-3487965874" required="True" name="phone" class="form-control" t-att-value="register.get('phone')"/>
+                  </div>
+
+                  <div t-attf-class="form-group #{error.get('street') and 'has-error' or ''} col-lg-6">
+                      <label class="control-label" for="street">Street</label>
+                      <input type="text" name="street" required="True" class="form-control" t-att-value="register.get('street')"/>
+                  </div>
+                  <br/><br/>
+                  <div class="clearfix"/>
+
+                  <div t-attf-class="form-group #{error.get('city') and 'has-error' or ''} col-lg-6">
+                      <label class="control-label" for="city">City</label>
+                      <input type="text" name="city" required="True" class="form-control" t-att-value="register.get('city')"/>
+                  </div>
+                  <div t-attf-class="form-group #{error.get('zip') and 'has-error' or ''} col-lg-6">
+                      <label class="control-label" for="zip">Zip / Postal Code</label>
+                      <input type="text" name="zip" required="True" class="form-control" t-att-value="register.get('zip')"/>
+                  </div>
+                  <br/><br/>
+                  <div t-attf-class="form-group #{error.get('country_id') and 'has-error' or ''} col-lg-6">
+                      <label class="control-label" for="country_id">Country</label>
+                      <select name="country_id" class="form-control">
+                          <option value="">Country...</option>
+                          <t t-foreach="countries or []" t-as="country">
+                              <option t-att-value="country.id" t-att-selected="country.id == register.get('country_id')"><t t-esc="country.name"/></option>
+                          </t>
+                      </select>
+                  </div>
+                  <div t-attf-class="form-group #{error.get('state_id') and 'has-error' or ''} col-lg-6">
+                      <label class="control-label" for="state_id" >State / Province</label>
+                      <select name="state_id" class="form-control">
+                          <option value="">select...</option>
+                          <t t-foreach="states or []" t-as="state">
+                              <option t-att-value="state.id" style="display:none;" t-att-data-country_id="state.country_id.id" t-att-selected="state.id == register.get('state_id')"><t t-esc="state.name"/></option>
+                          </t>
+                      </select>
+                  </div>
+                  </div>
+                  <div class="col-md-9" id="middle_column">
+                  <div class="modal-footer" >
+                      <button  type="submit" class="btn btn-primary btn-lg pull-right" style="float: right;">Register Now</button>
+                  </div>
+              </div>
+              <div class="col-md-3 oe_structure" id="right_column">
+
+              </div>
+            </div>
+          </form>
+          </div>
+        <div class="oe_structure"/>
+      </div>
+    </t>
+</template>
+
+<template id="event_right_photos" inherit_id="website_hotel_book.register" active="False" customize_show="True" name="Photos">
+    <xpath expr="//div[@id='right_column']" position="inside">
+        <div class="row">
+            <!--<h3>Up-Coming Events</h3>-->
+          <br/>
+            <ul class="media-list">
+                        <!--<li t-foreach="event_ids" t-as="event" class="media">-->
+                            <!--<div itemscope="itemscope" itemtype="http://schema.org/Event" class="media-body">-->
+                                <!--<h4 class="media-heading">-->
+                                    <!--<a itemprop="url" t-att-class="event.state == 'done' and 'text-success'" t-attf-href="/event/#{ slug(event) }/#{(not event.menu_id) and 'register' or ''}"><span itemprop="name" t-field="event.name"> </span></a>-->
+                                    <!--<small t-if="not event.address_id" class="label label-info">Online</small>-->
+                                    <!--<small t-if="not event.website_published" class="label label-danger">not published</small>-->
+                                <!--</h4>-->
+                                <!--<div>-->
+                                    <!--<t t-if="event.organizer_id">-->
+                                        <!--Organized by: <span t-field="event.organizer_id"> </span>-->
+                                    <!--</t>-->
+                                <!--</div>-->
+                                <!--<div>-->
+                                    <!--<i class="fa fa-clock-o"></i> <span itemprop="startDate" t-field="event.date_begin" t-field-options='{"hide_seconds":"True"}'> </span> <i>to</i> <span itemprop="endDate" t-field="event.date_end" t-field-options='{"hide_seconds":"True"}'> </span>-->
+                                <!--</div>-->
+                                <!--<div itemprop="location" t-field="event.address_id" t-field-options='{-->
+                                    <!--"widget": "contact",-->
+                                    <!--"fields": ["city"]-->
+                                    <!--}'/>-->
+                                <!--<div class="text-muted" t-if="event.type">-->
+                                    <!--<i class="fa fa-tag"></i> <span t-field="event.type"/>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</li>-->
+             </ul>
+        </div>
+    </xpath>
+</template>
+    </data>
+</openerp>

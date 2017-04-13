@@ -1,0 +1,17 @@
+{
+    'name': 'PDCRecord',
+    'version': '0.1',
+    'author': 'Nilmar',
+    'website': 'www.cybrosys.com',
+    'company': 'Nilmar',
+    'depends': ['account', 'base'],
+    'category': 'account ',
+    'data': [
+
+        'views/pdc_payment.xml',
+        'wizard/pdc_report_wizard.xml',
+        'views/bank_view.xml',
+    ],
+    'demo': [],
+    'installable': True,
+}

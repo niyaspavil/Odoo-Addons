@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <!--<record id="view_hotel_payment_voucher_tree" model="ir.ui.view">-->
+            <!--<field name="name">account.voucher.tree.inherit</field>-->
+            <!--<field name="model">account.voucher</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<tree string="Payment Voucher" create="false" delete="false">-->
+                    <!--<field name="date"/>-->
+                    <!--<field name="number" />-->
+                    <!--<field name="journal_id" />-->
+                    <!--<field name="amount" />-->
+                    <!--<field name="state"/>-->
+                <!--</tree>-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <!--&lt;!&ndash;Voucher Form&ndash;&gt;-->
+        <!--<record id="view_hotel_payment_voucher_form" model="ir.ui.view">-->
+            <!--<field name="name">hotel.voucher.form</field>-->
+            <!--<field name="model">account.voucher</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<form string="Payment Voucher" create="false" delete="false" edit="false">-->
+                    <!--<header>-->
+                     <!--&lt;!&ndash;<button name="proforma_voucher" string="Validate" states="draft" type="object" class="oe_highlight"/>&ndash;&gt;-->
+                     <!--&lt;!&ndash;<button name="cancel_voucher" string="Cancel Voucher" type="object" states="draft,proforma" />&ndash;&gt;-->
+                     <!--&lt;!&ndash;<button name="cancel_voucher" string="Cancel Voucher" type="object" states="posted" confirm="Are you sure you want to cancel this voucher?"/>&ndash;&gt;-->
+                     <!--&lt;!&ndash;<button name="action_cancel_draft" type="object" states="cancel" string="Set to Draft"/>&ndash;&gt;-->
+                    <!--<field name="state" widget="statusbar" statusbar_visible="draft,posted" statusbar_colors='{"proforma":"blue"}'/>-->
+                <!--</header>-->
+                    <!--<sheet>-->
+                        <!--<h1 attrs="{'invisible': [('number','=',False)]}"><field name="number"/></h1>-->
+                        <!--<group>-->
+                            <!--<field name="currency_id" invisible="1"/>-->
+                            <!--<field name="company_id" invisible="1"/>-->
+                            <!--<group>-->
+                                <!--<field name="account_id"-->
+                                  <!--domain="[('type','in', ['liquidity', 'payable', 'other'])]"/>                                &lt;!&ndash;<field name="partner_id" domain="[('customer','=',True)]" invisible="1" />&ndash;&gt;-->
+                                <!--<field name="journal_id" string="Payment Method" domain="[('type','in',['bank', 'cash'])]" />-->
+                                <!--<field name="amount" string="Paid Amount" widget="monetary" options="{'currency_field': 'currency_id'}" />-->
+                                <!--<field name="partner_id" options="{'create_edit':false, 'create':false, 'no_open':true}"/>-->
+                            <!--</group>-->
+                            <!--<group>-->
+                                <!--<field name="date" />-->
+                                <!--<field name="name" colspan="2" />-->
+                                <!--<field name="book_reference_id"-->
+                                       <!--options="{'create_edit':false, 'create':false, 'no_open':true}"/>-->
+                            <!--</group>-->
+                        <!--</group>-->
+                        <!--<notebook>-->
+                            <!--<page string="Note">-->
+                                <!--<field name="narration" />-->
+                            <!--</page>-->
+                            <!--<page string="Journal Items" attrs="{'invisible': [('state','!=','posted')]}">-->
+                                <!--<group col="4">-->
+                                     <!--<field name="period_id"/>-->
+                                <!--</group>-->
+                                <!--<field name="move_ids" readonly="1">-->
+                                    <!--<tree string="Journal Items">-->
+                                        <!--<field name="move_id"/>-->
+                                        <!--<field name="ref"/>-->
+                                        <!--<field name="date"/>-->
+                                        <!--<field name="partner_id"/>-->
+                                        <!--<field name="account_id"/>-->
+                                        <!--<field name="name"/>-->
+                                        <!--<field name="debit"/>-->
+                                        <!--<field name="credit"/>-->
+                                        <!--<field name="state"/>-->
+                                    <!--</tree>-->
+                                <!--</field>-->
+                            <!--</page>-->
+                        <!--</notebook>-->
+                        <!--<field name="type" invisible="1" />-->
+                    <!--</sheet>-->
+                <!--</form>-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <!--&lt;!&ndash;Voucher Wizard&ndash;&gt;-->
+        <!--<record model="ir.ui.view" id="view_hotel_payment_dialog_form">-->
+            <!--<field name="name">hotel.voucher.payment.dialog.form</field>-->
+            <!--<field name="model">account.voucher</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<form string="Payment Voucher">-->
+                    <!--<group>-->
+                        <!--<group>-->
+                            <!--<field name="state" invisible="1"/>-->
+                            <!--<field name="partner_id" />-->
+                            <!--<field name="currency_id" invisible="1"/>-->
+                            <!--<field name="amount" class="oe_inline"-->
+                                <!--string="Paid Amount"-->
+                                <!--widget='monetary' options='{"currency_field": "currency_id"}'-->
+                                <!--invisible="context.get('line_type', False)"-->
+                                <!--/>-->
+                            <!--<field name="journal_id"-->
+                                <!--domain="[('type','in',['bank', 'cash'])]"-->
+                                <!--widget="selection"-->
+                                <!--string="Payment Method"/>-->
+
+                        <!--</group>-->
+
+                        <!--<group>-->
+                            <!--<field name="date" />-->
+                            <!--<field name="period_id" invisible="1"/>-->
+                            <!--<field name="account_id"-->
+                                   <!--string="Advance Payment Account"-->
+                                   <!--domain="[('type','in', ['liquidity', 'receivable', 'other'])]"-->
+                                   <!--options="{'create_edit':false, 'create':false, 'no_open':true}"/>-->
+                            <!--<field name="book_reference_id"-->
+                                   <!--options="{'create_edit':false, 'create':false, 'no_open':true}"-->
+                                   <!--/>-->
+                        <!--</group>-->
+                    <!--</group>-->
+                    <!--<footer>-->
+                        <!--<button name="button_proforma_voucher" string="Register Payment" class="oe_highlight" type="object"/> or-->
+                        <!--<button string="Cancel" class="oe_link" special="cancel"/>-->
+                    <!--</footer>-->
+                <!--</form>-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <!--<record id="action_payment_voucher" model="ir.actions.act_window">-->
+            <!--<field name="name">Payment Voucher</field>-->
+            <!--<field name="res_model">account.voucher</field>-->
+            <!--<field name="view_type">form</field>-->
+            <!--<field name="view_mode">tree,form</field>-->
+            <!--<field name="domain">[('type','=','receipt')]</field>-->
+            <!--<field name="context">{'default_type': 'receipt', 'type': 'receipt'}</field>-->
+        <!--</record>-->
+
+    <menuitem id="menu_hotel_expense_payment_voucher" action="account_voucher.action_vendor_receipt" parent="menu_general" sequence="3"/>
+    </data>
+</openerp>

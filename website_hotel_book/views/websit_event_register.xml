@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="event_description_full" inherit_id="website_event.event_description_full" customize_show="True" name="Event's Ticket form">
+            <xpath expr="//div[@t-field='event.description']" position="before">
+                <link rel="stylesheet" href="/website_hotel_book/static/src/css/base.css"/>
+                <!--<script type="text/javascript" src="/website_hotel_book/static/src/js/jquery-1.5.1.min.js"></script>-->
+
+                <form t-attf-action="/event/cart/update?event_id=#{ event.id }" method="post" t-if="event.event_ticket_ids">
+                    <table itemprop="offers" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Ticket Type</th>
+                                <th style="min-width: 100px">Sales End</th>
+                                <th style="min-width: 100px">Price</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="foo" t-value="0"/>
+                            <t t-foreach="event.event_ticket_ids" t-as="ticket">
+
+
+                              <tr itemscope="itemscope" itemtype="http://data-vocabulary.org/Offer" t-if="not ticket.is_expired">
+                                <td itemscope="itemscope" itemtype="http://data-vocabulary.org/Product">
+                                    <div itemprop="name" t-field="ticket.name"/>
+                                    <div><small itemprop="description" t-field="ticket.product_id.description_sale"/></div>
+                                </td>
+                                <td><span itemprop="priceValidUntil" t-field="ticket.deadline"/></td>
+                                <td>
+                                    <t t-if="ticket.price or editable"><span t-esc="pricelist[foo]" t-field-options='{
+                                           "widget": "monetary",
+                                           "display_currency": "partner.property_product_pricelist.currency_id"
+                                      }'/>
+                                      <span itemprop="price" style="display:none;" t-esc="ticket.price"/>
+                                      <span itemprop="priceCurrency" style="display:none;" t-esc="partner.property_product_pricelist.currency_id.name"/>
+                                    </t>
+                                    <t t-if="not ticket.price and not editable">
+                                        <span>Free</span>
+                                    </t>
+                                </td>
+                                <td>
+                                    <span t-if="ticket.seats_max and ((ticket.seats_reserved or 0)*100 / ticket.seats_max)&gt;75" class="text-muted">
+                                        <t t-esc="ticket.seats_max - ticket.seats_reserved"/> <span>left</span>
+                                    </span>
+                                </td>
+                                <td>
+                                    <input type="radio" id="click_me" class="event_radio_btn" name="ticket_id" t-if="ticket.seat_available" t-attf-value="#{ ticket.id }"/>
+                                    <span t-if="not ticket.seats_available">Sold Out</span>
+                                </td>
+                              </tr>
+                             <t t-set="foo" t-value="foo + 1"/>
+                            </t>
+                        </tbody>
+                    </table>
+                    <div id="show_me" style="display:none">
+                        <button  type="submit" class="btn btn-primary btn-lg pull-right" style="float: right;">Continue</button>
+                    </div>
+                    <div class="clearfix"/>
+                    <hr/>
+                </form>
+            <!--<script type="text/javascript">-->
+                    <!--$(document).ready(function() {-->
+                       <!--$('input[type="radio"]').click(function() {-->
+                           <!--if($(this).attr('id') == 'click_me') {-->
+                                <!--$('#show_me').show();-->
+                           <!--}-->
+
+                           <!--else {-->
+                                <!--$('#show_me').hide();-->
+                           <!--}-->
+                       <!--});-->
+                    <!--});-->
+                <!--</script>-->
+        </xpath>
+
+        </template>
+    </data>
+</openerp>

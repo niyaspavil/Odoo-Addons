@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="hotel_acquirer_form" model="ir.ui.view">
+            <field name="name">hotel.acquirer.form.paypal</field>
+            <field name="model">payment.acquirer</field>
+            <field name="inherit_id" ref="payment.acquirer_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='acquirer_base']/group/field" position='after'>
+                   <field name="journal_id"/>
+                </xpath>
+            </field>
+        </record>
+
+
+
+
+        <record id="view_order_form_acquirer" model="ir.ui.view">
+            <field name="name">hotel.book.form.acquirer</field>
+            <field name="model">hotel.book</field>
+            <field name="inherit_id" ref="hotel_book.view_hotel_book_from"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='amount_total']" position="after">
+                    <field name="payment_acquirer_id" readonly="1" attrs="{'invisible': [('payment_acquirer_id', '=', False)]}" options='{"no_open":True}'/>
+                    <field name="payment_tx_id" readonly="1" attrs="{'invisible': [('payment_acquirer_id', '=', False)]}" groups="base.group_no_one"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

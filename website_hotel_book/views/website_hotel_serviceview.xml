@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <template id="service" name="Service cart">
+            <script type="text/javascript" src="/website_hotel_book/static/src/js/jquery-1.5.1.min.js"></script>
+            <script type="text/javascript" src="/web/static/lib/jquery/jquery.js"></script>
+            <script type="text/javascript" src="/website_hotel_book/static/src/js/servicedate.js"></script>
+            <t t-call="website.layout">
+              <div id="wrap">
+                  <div class="Counter" id="countdown_div">
+                <div class="left"><p>You have to complete within 30 minutes</p></div>
+               <div class="right" id='countdown' t-if="website.user_id != user_id"></div>
+               </div>
+                <div class="container oe_website_sale">
+                    <h1 class="mb32">Services and Amenities Booking</h1>
+                    <form id="myform">
+                        <div class="row">
+                            <div class="col-md-9" id="middle_column">
+                                <div class="form-group col-lg-6">
+                                    <input type="hidden" name="rsrv_from" id="rsrv_from" t-att-value="rsrv_from" style="width:30%"/>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <input type="hidden" name="rsrv_to" id="rsrv_to" t-att-value="rsrv_to" style="width:30%"/>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <input type="hidden" name="book_id" id="book_id" t-att-value="book_id" style="width:30%"/>
+                                </div>
+                            </div>
+                            <div class="col-md-9" id="middle_column">
+                               <table id="grid_basic" class="table table-condensed table-hover table-striped" style="width:80%">
+
+                               </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+              </div>
+            </t>
+        </template>
+    </data>
+</openerp>

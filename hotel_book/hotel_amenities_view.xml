@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <openerp>
+        <data>
+
+            <record id="view_hotel_amenities_tree" model="ir.ui.view">
+                <field name="name">hotel.amenities.tree</field>
+                <field name="model">hotel.amenities</field>
+                <field name="arch" type="xml">
+                    <tree string="Amenities Type">
+                        <field name="name"/>
+                        <field name="categ_id"/>
+                        <field name="status"/>
+                        <field name="list_price"/>
+                    </tree>
+                </field>
+            </record>
+            <record id="view_hotel_amenities_form" model="ir.ui.view">
+                <field name="name">hotel.amenities.form</field>
+                <field name="model">hotel.amenities</field>
+                <field name="arch" type="xml">
+                    <form string="Amenities Type" version="7.0">
+                        <sheet>
+                            <group>
+                                <div class="oe_left" style="width: 500px;">
+                                    <div class="oe_title" style="width: 390px;">
+                                        <field name="image_medium" widget="image" class="oe_avatar oe_left"/>
+                                        <b><label for="name" string="Amenities"/></b>
+                                        <h1><field name="name" class="oe_inline"/></h1>
+                                    </div>
+                                </div>
+                            </group>
+                            <group>
+                                <field name="status"/>
+                            </group>
+                            <notebook>
+                                <page string="Information">
+                                    <group>
+                                        <group>
+                                            <field name="type" invisible="1"/>
+                                            <field name="product_manager"/>
+                                            <field name="categ_id" domain="[('is_amenities','=',1)]" string="Amenities Type" options="{'create': false, 'create_edit': false}" />
+                                        </group>
+                                        <group>
+                                            <field name="active"/>
+                                            <field name="rental"/>
+                                        </group>
+                                    </group>
+                                </page>
+                                <page string="Accounting">
+                                    <group>
+                                        <group>
+                                            <field name="list_price"/>
+                                            <field name="taxes_id" widget="many2many_tags"/>
+                                        </group>
+                                        <group>
+                                            <field name="standard_price"/>
+                                            <field name="uom_id"/>
+                                        </group>
+                                    </group>
+                                </page>
+                                <page string="Description">
+                                    <field name="description" placeholder="describe the product characteristics..."/>
+                                </page>
+                            </notebook>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+            <record id="action_hotel_amenities" model="ir.actions.act_window">
+                <field name="name">Amenity Type</field>
+                <field name="res_model">hotel.amenities</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="search_view_id" eval="False"/>
+                <field name="context">{}</field>
+                <field name="help" type="html">
+                    <p class="oe_view_nocontent_create">
+                         Click to add Amenities
+                    </p>
+                </field>
+            </record>
+            <menuitem id="menu_hotel_ameniti" parent="menu_hotel_amenities" sequence="2" name="Amenities" action="action_hotel_amenities"/>
+
+        </data>
+    </openerp>

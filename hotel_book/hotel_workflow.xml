@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+        <!-- Reservation Work Flow -->
+            <record model="workflow" id="wkf_reservation">
+                <field name="name">hotel.book.basic</field>
+                <field name="osv">hotel.book</field>
+                <field name="on_create">True</field>
+            </record>
+            <record model="workflow.activity" id="act_draft">
+                <field name="wkf_id" ref="wkf_reservation"/>
+                <field name="flow_start">True</field>
+                <field name="name">draft</field>
+		    </record>
+
+
+            <record id="act_pre_reserved" model="workflow.activity">
+                <field name="wkf_id" ref="wkf_reservation"/>
+                <field name="name">pre_reserved</field>
+                <field name="kind">function</field>
+                <field name="action">action_reserve_function()</field>
+            </record>
+
+            <record id="trans_reserve_check" model="workflow.transition">
+                <field name="act_from" ref="act_draft"/>
+                <field name="act_to" ref="act_pre_reserved"/>
+                <field name="signal">signal_reserve_sent</field>
+            </record>
+
+            <record id="act_confirm" model="workflow.activity">
+                <field name="wkf_id" ref="wkf_reservation"/>
+                <field name="name">confirm</field>
+                <field name="kind">function</field>
+                <field name="action">action_confirm_function()</field>
+            </record>
+
+            <record id="trans_confirm_check" model="workflow.transition">
+                <field name="act_from" ref="act_pre_reserved"/>
+                <field name="act_to" ref="act_confirm"/>
+                <field name="signal">signal_confirm_sent</field>
+            </record>
+
+            <record id="act_done" model="workflow.activity">
+                <field name="wkf_id" ref="wkf_reservation"/>
+                <field name="name">done</field>
+                <field name="flow_stop">True</field>
+                <field name="kind">function</field>
+                <field name="action">_create_order()</field>
+            </record>
+
+            <record model="workflow.transition" id="trans_done_check">
+                <field name="act_from" ref="act_confirm" />
+                <field name="act_to" ref="act_done" />
+                <field name="signal">done</field>
+            </record>
+
+
+    <!-- Reservation Work Flow -->
+
+    <!-- Folio Work Flow -->
+            <record model="workflow" id="wkf_hotel">
+                <field name="name">hotel.folio.basic</field>
+                <field name="osv">hotel.folio</field>
+                <field name="on_create">True</field>
+            </record>
+            <record model="workflow.activity" id="act_cancel">
+                <field name="wkf_id" ref="wkf_hotel"/>
+                <field name="name">cancel</field>
+                <field name="flow_stop">True</field>
+                <field name="kind">stopall</field>
+                <field name="action">action_cancel()</field>
+		    </record>
+
+            <record model="workflow.activity" id="act_draft">
+                <field name="wkf_id" ref="wkf_hotel"/>
+                <field name="flow_start">True</field>
+                <field name="name">draft</field>
+            </record>
+
+            <record model="workflow.activity" id="act_router">
+                <field name="wkf_id" ref="wkf_hotel"/>
+                <field name="name">router</field>
+                <field name="kind">function</field>
+                <field name="action">action_wait()</field>
+                <field name="split_mode">OR</field>
+            </record>
+
+            <record model="workflow.activity" id="act_invoice">
+                <field name="wkf_id" ref="wkf_hotel"/>
+                <field name="name">invoice</field>
+                <field name="kind">subflow</field>
+                <field name="subflow_id" search="[('name','=','account.invoice.basic')]"/>
+                <field name="action">action_invoice_create()</field>
+            </record>
+
+            <record model="workflow.transition" id="trans_draft_router">
+                <field name="act_from" ref="act_draft"/>
+                <field name="act_to" ref="act_router"/>
+                <field name="signal">order_confirm</field>
+            </record>
+
+            <record model="workflow.transition" id="trans_draft_cancel">
+			    <field name="act_from" ref="act_draft"/>
+			    <field name="act_to" ref="act_cancel"/>
+			    <field name="signal">cancel</field>
+		    </record>
+
+            <record model="workflow.transition" id="trans_wait_invoice_invoice_manual">
+                <field name="act_from" ref="act_router"/>
+                <field name="act_to" ref="act_invoice"/>
+                <field name="signal">manual_invoice</field>
+            </record>
+
+    <!-- Folio Work Flow -->
+
+
+</data>
+</openerp>

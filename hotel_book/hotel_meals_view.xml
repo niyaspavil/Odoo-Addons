@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <openerp>
+        <data>
+
+            <record id="view_hotel_meal_tree" model="ir.ui.view">
+                <field name="name">hotel.meal.tree</field>
+                <field name="model">hotel.meal</field>
+                <field name="arch" type="xml">
+                    <tree string="Meals Type">
+                        <field name="name"/>
+                        <field name="list_price"/>
+                    </tree>
+                </field>
+            </record>
+            <record id="view_meal_meals_form" model="ir.ui.view">
+                <field name="name">hotel.meal.form</field>
+                <field name="model">hotel.meal</field>
+                <field name="arch" type="xml">
+                    <form string="Meals Type" version="7.0">
+                        <sheet>
+                            <group>
+                                <div class="oe_left" style="width: 500px;">
+                                    <div class="oe_title" style="width: 390px;">
+                                        <field name="image_medium" widget="image" class="oe_avatar oe_left"/>
+                                        <b><label for="name" string="Meals Name"/></b>
+                                        <h1><field name="name" class="oe_inline"/></h1>
+                                    </div>
+                                </div>
+                            </group>
+                            <group>
+                                <field name="is_types"/>
+                            </group>
+                            <notebook>
+                                <page string="Accounting Information">
+                                    <group>
+                                        <group>
+                                            <field name="type" invisible="1"/>
+                                            <field name="product_manager"/>
+                                            <field name="uom_id"/>
+                                            <field name="categ_id" invisible="1"/>
+                                        </group>
+                                        <group>
+                                            <field name="list_price"/>
+                                            <field name="taxes_id" widget="many2many_tags"/>
+                                        </group>
+                                    </group>
+                                </page>
+                                <page string="Description">
+                                    <field name="description" placeholder="describe the product characteristics..."/>
+                                </page>
+                            </notebook>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+            <record id="action_hotel_meal" model="ir.actions.act_window">
+                <field name="name">Meals Type</field>
+                <field name="res_model">hotel.meal</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="search_view_id" eval="False"/>
+                <field name="context">{}</field>
+                <field name="help" type="html">
+                    <p class="oe_view_nocontent_create">
+                         Click to add Meals
+                    </p>
+                </field>
+            </record>
+            <menuitem id="menu_hotel_meal" parent="menu_view_config" sequence="4" name="Meals" action="action_hotel_meal"/>
+
+        </data>
+    </openerp>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <menuitem name="Meals Report" id="menu_meals_report" parent="hotel_book.menu_test_base_main" />
+
+        <record id="view_meals_report_form" model="ir.ui.view">
+            <field name="name">event_form</field>
+            <field name="model">hotel.mealscount</field>
+            <field name="arch" type="xml">
+                <form string="Meals" create="false">
+                     <sheet>
+
+                         <group>  <field name="filter_date" /> </group>
+                        <group>
+                       <group>  <field name="breakfastcount" /> </group>
+                       <group>  <field name="lunchcount"  /> </group>
+                       <group>  <field name="dinnercount"/>  </group>
+
+
+
+                        </group>
+
+
+                    <field name="related_mealscount">
+                        <tree create="false" delete="false" edit="false" >
+                            <field name="book_id"/>
+                            <field name="partner_id"/>
+                            <field name="breakfast" />
+                            <field name="lunch"  />
+                            <field name="dinner"/>
+                </tree>
+                    </field>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+
+        <record model="ir.actions.act_window" id="action_filter_wizard">
+            <field name="name">Select Date</field>
+            <field name="res_model">hotel.date_select</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem name="Meals / Date" id="menu_meals_report_filter_count" parent="menu_meals_report" sequence="2" action="action_filter_wizard"/>
+
+        <record id="view_sale_report_form" model="ir.ui.view">
+            <field name="name">Select Date</field>
+            <field name="model">hotel.date_select</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                    <field name="filter_date"/>
+                    </group>
+                    <button name="count_meals_daily" value="submit" string="Submit" type="object"/>
+                </form>
+            </field>
+        </record>
+
+
+    </data>
+</openerp>

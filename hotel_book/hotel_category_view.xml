@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+     <openerp>
+        <data>
+
+            <!-- Code for Accommodation Type-->
+
+            <menuitem  id="menu_hotel_accommodation" name="Accommodation" parent="menu_view_config" sequence="1"/>
+
+
+            <record id="view_hotel_type_tree" model="ir.ui.view">
+                <field name="name">hotel.category.tree</field>
+                <field name="model">hotel.category</field>
+                <field name="arch" type="xml">
+                    <tree string="Accommodation Type">
+                        <field name="name"/>
+                    </tree>
+                </field>
+            </record>
+            <record id="view_hotel_type_form" model="ir.ui.view">
+                <field name="name">hotel.category.form</field>
+                <field name="model">hotel.category</field>
+                <field name="arch" type="xml">
+                    <form string="Accommodation Type" version="7.0">
+                        <sheet>
+                            <group>
+                                <field name="name"/>
+                                <field name="available_in_web"/>
+                            </group>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+            <record id="action_hotel_cat" model="ir.actions.act_window">
+                <field name="name">Accommodation Type</field>
+                <field name="res_model">hotel.category</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="search_view_id" eval="False"/>
+                <field name="context">{}</field>
+                <field name="help" type="html">
+                    <p class="oe_view_nocontent_create">
+                         Click to add Accommodation Type
+                    </p>
+                </field>
+            </record>
+            <menuitem name="Room Types" id="menu_hotel_accom" action="action_hotel_cat" sequence="1" parent="menu_hotel_accommodation"/>
+
+            <!-- Code for Accommodation Type-->
+
+
+
+            <!-- Code for Amenity Type-->
+
+            <menuitem  id="menu_hotel_amenities" name="Amenities" parent="menu_view_config" sequence="2"/>
+
+
+            <record id="view_hotel_amenity_type_tree" model="ir.ui.view">
+                <field name="name">hotel.amenity.tree</field>
+                <field name="model">hotel.amenity</field>
+                <field name="arch" type="xml">
+                    <tree string="Amenities Type">
+                        <field name="name"/>
+                    </tree>
+                </field>
+            </record>
+            <record id="view_hotel_amenity_type_form" model="ir.ui.view">
+                <field name="name">hotel.amenity.form</field>
+                <field name="model">hotel.amenity</field>
+                <field name="arch" type="xml">
+                    <form string="Amenities Type" version="7.0">
+                        <sheet>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+            <record id="action_hotel_amenity_type" model="ir.actions.act_window">
+                <field name="name">Amenities Type</field>
+                <field name="res_model">hotel.amenity</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="search_view_id" eval="False"/>
+                <field name="context">{}</field>
+                <field name="help" type="html">
+                    <p class="oe_view_nocontent_create">
+                         Click to add Amenities Type
+                    </p>
+                </field>
+            </record>
+            <menuitem name="Amenities Types" id="menu_hotel_amenity" action="action_hotel_amenity_type" sequence="1" parent="menu_hotel_amenities"/>
+
+            <!-- Code for Amenity Type-->
+
+
+
+            <!-- Code for Service Type-->
+
+            <menuitem  id="menu_hotel_services" name="Services" parent="menu_view_config" sequence="3"/>
+
+
+            <record id="view_hotel_service_type_tree" model="ir.ui.view">
+                <field name="name">hotel.service.tree</field>
+                <field name="model">hotel.service</field>
+                <field name="arch" type="xml">
+                    <tree string="Services Type">
+                        <field name="name"/>
+                    </tree>
+                </field>
+            </record>
+            <record id="view_hotel_service_type_form" model="ir.ui.view">
+                <field name="name">hotel.service.form</field>
+                <field name="model">hotel.service</field>
+                <field name="arch" type="xml">
+                    <form string="Services Type" version="7.0">
+                        <sheet>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+            <record id="action_hotel_service_type" model="ir.actions.act_window">
+                <field name="name">Services Type</field>
+                <field name="res_model">hotel.service</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="search_view_id" eval="False"/>
+                <field name="context">{}</field>
+                <field name="help" type="html">
+                    <p class="oe_view_nocontent_create">
+                         Click to add Service Type
+                    </p>
+                </field>
+            </record>
+            <menuitem name="Service Types" id="menu_hotel_service" action="action_hotel_service_type" sequence="1" parent="menu_hotel_services"/>
+
+            <!-- Code for Service Type-->
+
+
+
+            <!-- Code for Floor Type-->
+
+            <record id="view_hotel_floor_tree" model="ir.ui.view">
+                <field name="name">hotel.floor.tree</field>
+                <field name="model">hotel.floor</field>
+                <field name="arch" type="xml">
+                    <tree string="Floor Type">
+                        <field name="name"/>
+                        <field name="floor_seq"/>
+                    </tree>
+                </field>
+            </record>
+            <record id="view_hotel_floor_form" model="ir.ui.view">
+                <field name="name">hotel.floor.form</field>
+                <field name="model">hotel.floor</field>
+                <field name="arch" type="xml">
+                    <form string="Floor Type" version="7.0">
+                        <sheet>
+                            <group>
+                                <field name="name"/>
+                                <field name="floor_seq"/>
+                            </group>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+            <record id="action_hotel_floor" model="ir.actions.act_window">
+                <field name="name">Floor Type</field>
+                <field name="res_model">hotel.floor</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="search_view_id" eval="False"/>
+                <field name="context">{}</field>
+                <field name="help" type="html">
+                    <p class="oe_view_nocontent_create">
+                         Click to add Floor
+                    </p>
+                </field>
+            </record>
+            <menuitem id="menu_hotel_floor" parent="menu_view_config" sequence="4" name="Floor" action="action_hotel_floor"/>
+
+            <!-- Code for Floor Type-->
+
+        </data>
+     </openerp>

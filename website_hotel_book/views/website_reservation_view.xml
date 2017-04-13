@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <template id="cart_form" inherit_id="website.layout" name="My Cart Link">
+          <xpath expr="//header//ul[@id='top_menu']/li" position="before">
+              <t t-if="user_id.partner_id.active==True">
+                  <li t-if="user_id.partner_id.customer==True">
+                      <a href="/reserve/views">
+                         <i class="fa fa-shopping-cart"></i>
+                              My Order
+                      </a>
+                  </li>
+
+              </t>
+          </xpath>
+           <xpath expr="//div[@class='container']" position="inside">
+
+           </xpath>
+        </template>
+
+        <template id="booking_line" name="Reservation Order">
+           <t t-call="website.layout">
+              <div id="wrap">
+                <div class="container oe_website_sale">
+
+                  <h1 class="mb32">Reservation Lines</h1>
+                       <div class="row">
+                          <div class="col-md-8 col-sm-9 oe_cart">
+
+                                <div t-if="not hotel_ids">
+                                    <h4 class="mb32">Your have not Order any Reservation</h4>
+                                 </div>
+                                <ul class="media-list">
+                                            <li t-foreach="hotel_ids" t-as="hotel_id" class="media">
+                                                <div itemscope="itemscope" itemtype="http://schema.org/Event" class="media-body">
+                                                    <h4 class="media-heading">
+                                                        <a itemprop="url" t-attf-href="/cart/confirmation/#{ hotel_id.id }">Booking Number : <span itemprop="name" t-field="hotel_id.name"> </span></a>
+
+                                                    </h4>
+                                                    <div>
+                                                        <t t-if="hotel_id.order_date">
+                                                            Order Date: <span t-field="hotel_id.order_date"> </span>
+                                                        </t>
+                                                    </div>
+                                                    <div class="text-muted" >
+                                                        <i class="fa fa-tag"></i> Total Price: <span t-field="hotel_id.amount_total"/>
+                                                    </div>
+                                                    <div class="text-muted" >
+                                                        <i class="fa fa-tag"></i>Status: <span t-field="hotel_id.state"/>
+
+                                                    </div>
+                                                </div>
+                                            </li>
+                                 </ul>
+                          </div>
+                        </div>
+                </div>
+                <div class="oe_structure">
+                </div>
+              </div>
+           </t>
+
+        </template>
+    </data>
+</openerp>

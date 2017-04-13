@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="pdc_payment_report_form_view">
+            <field name="name">pdc.payment.report.form</field>
+            <field name="model">pdc.payment.report</field>
+            <field name="arch" type="xml">
+                <form string="PDC Report">
+                <!--<header>-->
+                    <!--<button name="action_confirm" string="Confirm" type="object" class="oe_highlight"/>-->
+                <!--</header>-->
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="from_date" />
+                                <field name="partner_ids" widget="many2many_tags"/>
+                            </group>
+                            <group>
+                                <field name="to_date"/>
+                                <field name="state"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="pdc_report_act">
+            <field name="name">PDC Report</field>
+            <field name="res_model">pdc.payment.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="pdc_pay_report_menu" parent="pdc_pay_main_menu" name="PDC Report" action="pdc_report_act"/>
+
+    </data>
+</openerp>

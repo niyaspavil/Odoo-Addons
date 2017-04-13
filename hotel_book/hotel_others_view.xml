@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+     <openerp>
+        <data>
+
+            <!-- Code for Food Intolerance -->
+            <record id="view_hotel_intolerance_tree" model="ir.ui.view">
+                <field name="name">hotel.intolerance.tree</field>
+                <field name="model">hotel.intolerance</field>
+                <field name="arch" type="xml">
+                    <tree string="Food Intolerance Type" color="BLUE">
+                        <field name="name"/>
+                        <field name="intolerance"/>
+                    </tree>
+                </field>
+            </record>
+
+            <record id="view_hotel_intolerance_form" model="ir.ui.view">
+                <field name="name">hotel.intolerance.form</field>
+                <field name="model">hotel.intolerance</field>
+                <field name="arch" type="xml">
+                    <form string="Food Intolerance Type" version="7.0">
+                        <sheet>
+                            <group>
+                                <field name="name"/>
+                                <field name="intolerance"/>
+                            </group>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+
+            <record id="action_intolerance_type" model="ir.actions.act_window">
+                <field name="name">Food Intolerance Types</field>
+                <field name="res_model">hotel.intolerance</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="search_view_id" eval="False"/>
+                <field name="context">{}</field>
+                <field name="help" type="html">
+                    <p class="oe_view_nocontent_create">
+                         Click to add Food Intolerance and their Description
+                    </p>
+                </field>
+            </record>
+
+
+            <menuitem id="menu_food_base" parent="menu_view_medical" sequence="1" name="Food Intolerance" action="action_intolerance_type"/>
+            <!-- Code for Diseases -->
+
+                        <!-- Code for Food Intolerance -->
+            <record id="view_hotel_diseases_tree" model="ir.ui.view">
+                <field name="name">hotel.diseases.tree</field>
+                <field name="model">hotel.diseases</field>
+                <field name="arch" type="xml">
+                    <tree string="Diseases Type" color="BLUE">
+                        <field name="name"/>
+                        <field name="diseases"/>
+                    </tree>
+                </field>
+            </record>
+
+            <record id="view_hotel_diseases_form" model="ir.ui.view">
+                <field name="name">hotel.diseases.form</field>
+                <field name="model">hotel.diseases</field>
+                <field name="arch" type="xml">
+                    <form string="Diseases Type" version="7.0">
+                        <sheet>
+                            <group>
+                                <field name="name"/>
+                                <field name="diseases"/>
+                            </group>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+
+            <record id="action_diseases_type" model="ir.actions.act_window">
+                <field name="name">Diseases Types</field>
+                <field name="res_model">hotel.diseases</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="search_view_id" eval="False"/>
+                <field name="context">{}</field>
+                <field name="help" type="html">
+                    <p class="oe_view_nocontent_create">
+                         Click to add Diseases and their Description
+                    </p>
+                </field>
+            </record>
+
+
+            <menuitem id="menu_diseases_base" parent="menu_view_medical" sequence="2" name="Diseases" action="action_diseases_type"/>
+            <!-- Code for Food Intolerance -->
+
+                        <!-- Code for Allergies -->
+            <record id="view_hotel_allergies_tree" model="ir.ui.view">
+                <field name="name">hotel.allergies.tree</field>
+                <field name="model">hotel.allergies</field>
+                <field name="arch" type="xml">
+                    <tree string="Allergies Type" color="BLUE">
+                        <field name="name"/>
+                        <field name="allergies"/>
+                    </tree>
+                </field>
+            </record>
+
+            <record id="view_hotel_allergies_form" model="ir.ui.view">
+                <field name="name">hotel.allergies.form</field>
+                <field name="model">hotel.allergies</field>
+                <field name="arch" type="xml">
+                    <form string="Allergies Type" version="7.0">
+                        <sheet>
+                            <group>
+                                <field name="name"/>
+                                <field name="allergies"/>
+                            </group>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+
+            <record id="action_allergies_type" model="ir.actions.act_window">
+                <field name="name">Allergies Types</field>
+                <field name="res_model">hotel.allergies</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="search_view_id" eval="False"/>
+                <field name="context">{}</field>
+                <field name="help" type="html">
+                    <p class="oe_view_nocontent_create">
+                         Click to add Allergies and their Description
+                    </p>
+                </field>
+            </record>
+
+
+            <menuitem id="menu_allergies_base" parent="menu_view_medical" sequence="3" name="Allergies" action="action_allergies_type"/>
+            <!-- Code for Allergies -->
+        </data>
+     </openerp>

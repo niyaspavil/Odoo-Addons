@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_hotel_room_form_inherit" model="ir.ui.view">
+            <field name="name">view.hotel.room.form.inherited</field>
+            <field name="model">hotel.room</field>
+            <field name="inherit_id" ref="hotel_book.view_hotel_room_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//page[@string='Information']" position="after">
+                    <page string = "Room Reservation">
+                        <separator colspan='4' string="Room Reservation Line" />
+                        <field name="room_reservation_line_ids" colspan="4" nolabel='1' >
+                            <form string=" Room line" >
+                                <group colspan='4' col='4'>
+                                    <field name="room_id"/>
+                                    <field name="date"/>
+                                    <!--<field name="state"/>-->
+                                    <!--<field name="check_out"/>-->
+                                    <field name="reservation_id" />
+                                </group>
+                            </form>
+                            <tree>
+                                <field name="room_id"/>
+                                <field name="date"/>
+                                <!--<field name="check_out"/>-->
+                                <!--<field name="state"/>-->
+                                <field name="reservation_id" />
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+            <!-- Form view of quick room reservation-->
+         <record model="ir.ui.view" id="quick_room_reservation_form_view">
+             <field name="name">quick.room.reservation.form</field>
+             <field name="model">quick.room.reservation</field>
+             <field name="arch" type="xml">
+                 <form string="Quick Reservation">
+                     <header>
+                         <separator string="Quick Reservation" colspan="4"/>
+                     </header>
+                     <sheet>
+                         <group colspan="4" col="4">
+                             <field name="partner_id" />
+                             <field name="room_id" />
+                             <field name="check_in"/>
+                             <field name="check_out"/>
+                             <field name="warehouse_id"/>
+                             <field name="pricelist_id"/>
+                             <field name="partner_invoice_id"/>
+                             <field name="partner_order_id"/>
+                             <field name="partner_shipping_id"/>
+                         </group>
+                     </sheet>
+                     <footer>
+                         <group colspan="2" col="2">
+                             <button string="Save" name="room_reserve" type="object" icon="gtk-ok" />
+                             <button string="Cancel" special="cancel" icon="gtk-cancel" />
+                         </group>
+                     </footer>
+                 </form>
+             </field>
+         </record>
+             <record model="ir.ui.view" id="hotel_reservation_summary_form_view">
+             <field name="name">hotel.reservation.summary.form</field>
+             <field name="model">hotel.reservation.summary</field>
+             <field name="arch" type="xml">
+                 <form string="Reservation Summary">
+                     <header>
+                         <separator string="Room Reservation Summary" colspan="4"/>
+                     </header>
+                     <sheet>
+                         <group colspan="4" col="4">
+                             <label for="date_from" string="Summary Period"/>
+                             <div>
+                                 <field name="date_from" class="oe_inline"/>
+                                 to
+                                 <field name="date_to" class="oe_inline"/>
+                             </div>
+                         </group>
+                         <notebook>
+                             <page string="Room Summary">
+                                 <field name="summary_header" colspan="4" invisible="1"/>
+                                 <field name="room_summary" colspan="4" invisible="1"/>
+                                 <widget type="Room_Reservation"></widget>
+                             </page>
+                         </notebook>
+                     </sheet>
+                 </form>
+             </field>
+         </record>
+       <record model="ir.actions.act_window" id="action_hotel_reservation_summary_id">
+             <field name="name">Hotel Reservations Summary</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="res_model">hotel.reservation.summary</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">form</field>
+         </record>
+         <menuitem name="Reservations Summary"
+         id="menu_action_hotel_reservation_summary"
+         action="action_hotel_reservation_summary_id"
+         parent="menu_general"
+         sequence="3"/>
+        </data>
+    </openerp>

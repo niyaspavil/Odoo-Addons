@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="hotel_accom" inherit_id="website.assets_frontend" name="Accommodation">
+          <xpath expr="." position="inside">
+            <!--<script type="text/javascript" src="/website_hotel_book/static/src/js/jquery-1.5.1.min.js"></script>-->
+            <!--<script type="text/javascript" src="/web/static/lib/jquery/jquery.js"></script>-->
+            <script type="text/javascript" src="/website_hotel_book/static/src/js/requestdate.js"></script>
+            <script type="text/javascript" src="/web/static/lib/jquery.ui/js/jquery-ui-1.9.1.custom.js"></script>
+            <script type="text/javascript" src="/website_hotel_book/static/src/js/add_event.js"></script>
+            <script type="text/javascript" src="/website_hotel_book/static/src/js/accomedelete.js"></script>
+            <script type="text/javascript" src="/website_hotel_book/static/src/js/cartdelete.js"></script>
+            <script type="text/javascript" src="/website_hotel_book/static/src/js/mealsdelete.js"></script>
+
+            <script type="text/javascript" src="/website_hotel_book/static/src/js/servicedelete.js"></script>
+            <script type="text/javascript" src="/website_hotel_book/static/src/js/amenityedelete.js"></script>
+
+            <link rel="stylesheet" href="/website_hotel_book/static/src/css/timer.css"/>
+            <link rel="stylesheet" href="/web/static/lib/jquery.ui/css/smoothness/jquery-ui-1.9.1.custom.css"/>
+            <link rel="stylesheet" href="/web/static/lib/jquery.ui/css/smoothness/jquery-ui-1.9.1.custom.min.css"/>
+          </xpath>
+        </template>
+
+        <template id="accommodation" name="Accommodation cart">
+            <t t-call="website.layout">
+              <div id="wrap">
+                  <div class="Counter" id="countdown_div">
+                <div class="left"><p>You have to complete within 30 minutes</p></div>
+               <div class="right" id='countdown' t-if="website.user_id != user_id"></div>
+               </div>
+                <div class="container oe_website_sale">
+                    <h1 class="mb32">Accommodation Booking</h1>
+                    <form id="myform">
+                        <div class="row">
+                            <div class="col-md-9" id="middle_column">
+                                <div t-attf-class="form-group #{error.get('from_date') and 'has-error' or ''} col-lg-6">
+                                    <label class="control-label" for="from_date">From Date</label>
+                                    <input type="text" name="from_date" id="datepicker1" class="form-control" required="True" t-att-value="register.get('from_date')" style="width:50%"/>
+                                    <div id="error_from"></div>
+                                </div>
+                                <div t-attf-class="form-group #{error.get('to_date') and 'has-error' or ''} col-lg-6" >
+                                    <label class="control-label" for="to_date">To Date</label>
+                                    <input type="text" name="to_date" id="datepicker2" class="form-control" required="True" t-att-value="register.get('to_date')" style="width:50%"/>
+                                    <div id="error_to"></div>
+                                </div>
+                                <div t-attf-class="form-group #{error.get('accom_type') and 'has-error' or ''} col-lg-6" >
+                                    <label class="control-label" for="accom_type">Accommodation Type</label>
+                                    <select name="accom_type" class="form-control">
+                                      <option value="">Choose Type...</option>
+                                      <t t-foreach="categories or []" t-as="type">
+                                          <option t-att-value="type.id" t-att-selected="type.id == register.get('accom_type')"><t t-esc="type.name"/></option>
+                                      </t>
+                                  </select>
+                                  <div id="error_check"></div>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <input type="hidden" name="book_id" id="book_id" t-att-value="book_id" style="width:30%"/>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <br/>
+                                    <button type="button" id="buttApply" class="btn btn-primary">Search</button>
+                                </div>
+                            </div>
+                            <div class="col-md-9" id="middle_column">
+                               <div id="loading" style="width:100%;display:none;" align="center"><img src="/website_hotel_book/static/src/img/loading.gif" alt=""/></div>
+                               <table id="grid_basic" class="table table-condensed table-hover table-striped" style="width:80%">
+                               </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+              </div>
+           </t>
+        </template>
+    </data>
+</openerp>

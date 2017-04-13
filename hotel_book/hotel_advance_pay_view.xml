@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+         <!-- Code for Advance Payment-->
+
+            <record id="view_hotel_advance_tree" model="ir.ui.view">
+                <field name="name">hotel.advance.tree</field>
+                <field name="model">hotel.advance</field>
+                <field name="arch" type="xml">
+                    <tree string="Security Type">
+                        <field name="advance_pay"/>
+                        <field name="is_active"/>
+                    </tree>
+                </field>
+            </record>
+            <record id="view_hotel_advance_form" model="ir.ui.view">
+                <field name="name">hotel.advance.form</field>
+                <field name="model">hotel.advance</field>
+                <field name="arch" type="xml">
+                    <form string="Security Type" version="7.0">
+                        <sheet>
+                            <group>
+                                <field name="advance_pay"/>
+                                <field name="is_active"/>
+                            </group>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+            <record id="action_hotel_advance" model="ir.actions.act_window">
+                <field name="name">Advance Payment</field>
+                <field name="res_model">hotel.advance</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="search_view_id" eval="False"/>
+                <field name="context">{}</field>
+                <field name="help" type="html">
+                    <p class="oe_view_nocontent_create">
+                         Click to add Advance Payment Amount
+                    </p>
+                </field>
+            </record>
+         <!-- Code for Advance Payment-->
+
+         <menuitem id="menu_hotel_advance" parent="hotel_book.menu_view_config" sequence="5" name="Advance Payment" action="action_hotel_advance"/>
+    </data>
+</openerp>

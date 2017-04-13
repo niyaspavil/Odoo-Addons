@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="assets_pay_hotel" inherit_id="website.assets_frontend" name="Shop">
+          <xpath expr="." position="inside">
+              <script type="text/javascript" src="/website_hotel_book/static/src/js/payment.js"></script>
+              <script type="text/javascript" src="/website_hotel_book/static/src/js/payment_validate.js"></script>
+          </xpath>
+        </template>
+        <template id="payment_view" name="Payment Option">
+            <t t-call="website.layout">
+              <div id="wrap">
+                  <div class="Counter" id="countdown_div">
+                <div class="left"><p>You have to complete within 30 minutes</p></div>
+               <div class="right" id='countdown' t-if="website.user_id != user_id"></div>
+               </div>
+                <div class="container oe_website_sale">
+                    <h1 class="mb32">Payment Option</h1>
+                        <div class="row">
+                            <div class="col-md-9" id="middle_column">
+                                <div class="form-group col-md-9 media-body">
+                                    <input type="hidden" name="book_id" id="book_id" t-att-value="book.id" style="width:30%"/>
+                                    <h4 class="media-heading " style="color:#1E90FF">
+                                        Booking Number : <span itemprop="name" t-field="book.name"/><input type="hidden" name="reference" id="reference" t-att-value="book.name" style="width:30%"/>
+                                    </h4>
+                                    <i class="fa fa-tag"/>Order Date: <span t-field="book.order_date"> </span>
+                                </div>
+                                <div class="form-group col-md-9">
+                                    <h4 class="media-heading ">
+                                            Total Amount: <span t-field="book.amount_total" t-field-options='{
+                                                        "widget": "monetary",
+                                                        "display_currency": "book.partner_id.property_product_pricelist.currency_id"
+                                                    }'/>
+                                    </h4>
+                                </div>
+                                <div class="form-group col-md-9">
+                                    <h4 class="media-heading ">
+                                            You pay the Advance amount as : <span t-field="advance.advance_pay" t-field-options='{
+                                                        "widget": "monetary",
+                                                        "display_currency": "book.partner_id.property_product_pricelist.currency_id"
+                                                    }'/>
+                                    </h4>
+                                </div>
+
+                            </div>
+                            <div class="col-md-9" id="middle_column">
+                              <div class="js_payment mb64 row" t-if="acquirers and book.amount_total" id="payment_method">
+                                  <div class="col-lg-5 col-sm-6">
+                                      <h4>Payment Method:</h4>
+                                      <ul class="list-unstyled">
+                                        <li t-foreach="acquirers or []" t-as="acquirer">
+                                          <label t-if="acquirer.button">
+                                              <input t-att-value="acquirer.id" type="radio" name="acquirer" t-att-checked="acquirers[0] == acquirer"/>
+                                              <img class="media-object" style="width: 60px; display: inline-block;"
+                                                  t-att-title="acquirer.name"
+                                                  t-att-src="'/payment_%s/static/src/img/%s_icon.png' % (acquirer.provider, acquirer.provider)"/>
+                                                  <span t-field="acquirer.name"/>
+                                          </label>
+                                        </li>
+                                      </ul>
+                                  </div>
+                                  <div class="col-lg-3 col-sm-3">
+                                      <t t-foreach="acquirers or []" t-as="acquirer">
+                                          <div t-att-data-id="acquirer.id" class="oe_sale_acquirer_button hidden pull-right">
+                                            <div t-raw="acquirer.button"/>
+                                            <div t-field="acquirer.pre_msg"/>
+                                          </div>
+                                      </t>
+                                  </div>
+                              </div>
+                              <div class="js_payment mb64 row" t-if="not book.amount_total" id="payment_method">
+                                <div class="col-lg-8 col-sm-8">
+                                  <form target="_self" t-attf-action="/shop/payment/validate/{ book.id }" method="post" class="pull-right">
+                                      <a style="width:100px;" class="btn btn-primary a-submit">
+                                        <span>Pay Now <span class="fa fa-long-arrow-right"></span></span>
+                                      </a>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                </div>
+              </div>
+            </t>
+        </template>
+
+        <template id="confirmation">
+          <t t-call="website.layout">
+              <t t-set="additional_title">Reservation - Confirmed</t>
+              <div id="wrap">
+                <div class="container oe_website_sale">
+                  <h1 class="mb32">Reservation <em t-field="book.name"/> Confirmed</h1>
+                  <div class="row">
+                      <div class="col-md-8 oe_cart">
+                          <h2>Thank you for your Reservation.</h2>
+                          <div class="oe_website_sale_tx_status" t-att-data-order-id="book.id">
+                          </div>
+                          <div class="clearfix"/>
+                          <div class="oe_structure"/>
+                      </div>
+                      <div class="col-md-3 col-md-offset-1 text-muted" id="right_column">
+                        <h4>Bill To:</h4>
+                        <div t-field="book.partner_invoice_id" t-field-options='{
+                            "widget": "contact",
+                            "fields": ["address", "name", "phone", "email"]
+                            }'/>
+                        <t>
+                            <h4 class="mt32">Ship To:</h4>
+                            <t t-if="book.partner_shipping_id and book.partner_shipping_id.id != book.partner_invoice_id.id">
+                              <div t-field="book.partner_shipping_id" t-field-options='{
+                                "widget": "contact",
+                                "fields": ["address", "name", "phone"]
+                                }'/>
+                            </t>
+                            <address t-if="book.partner_shipping_id.id == book.partner_invoice_id.id">Ship to the same address</address>
+                        </t>
+                      </div>
+                  </div>
+
+                </div>
+                <div class="oe_structure"/>
+              </div>
+
+          </t>
+        </template>
+
+        <template id="cancel">
+          <t t-call="website.layout">
+              <t t-set="additional_title">Reservation - Canceld</t>
+              <div id="wrap">
+                <div class="container oe_website_sale">
+                  <h1 class="mb32">Reservation <em t-field="book.name"/> is not Confirm</h1>
+                  <div class="row">
+                      <div class="col-md-8 oe_cart">
+                          <h2>Your Reservation is not Confirmed due some internal error. Please try again.</h2>
+                          <div class="oe_website_sale_tx_status" t-att-data-order-id="book.id">
+                          </div>
+                          <div class="clearfix"/>
+                          <div class="oe_structure"/>
+                      </div>
+                  </div>
+                </div>
+                <div class="oe_structure"/>
+              </div>
+
+          </t>
+</template>
+
+
+    </data>
+</openerp>

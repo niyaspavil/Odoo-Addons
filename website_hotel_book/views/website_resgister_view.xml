@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="hotel_cart" name="Reservation cart">
+            <!--<script type="text/javascript" src="/website_hotel_book/static/src/js/jquery-1.5.1.min.js"></script>-->
+            <!--<script type="text/javascript" src="/web/static/lib/jquery/jquery.js"></script>-->
+           <t t-call="website.layout">
+              <div id="wrap">
+                  <div class="Counter" id="countdown_div">
+                <div class="left"><p>You have to complete within 30 minutes</p></div>
+               <div class="right" id='countdown' t-if="website.user_id != user_id"></div>
+               </div>
+                <div class="container oe_website_sale">
+                  <h1 class="mb32">Reservation Cart</h1>
+                  <div class="row">
+                      <div class="col-md-8 col-sm-9 oe_cart">
+
+                          <div t-if="new_id==True">
+                                <h3 class="mb32" style="color:RED">Your Reservation is Cancelled</h3>
+                          </div>
+                          <div t-if="book_id">
+                              <input type="hidden" id="book_id" t-att-value="book_id.id"/>
+                              <table t-if="event_ids" class='table table-striped table-condensed' id="cart_products">
+                                  <thead>
+                                      <tr>
+                                          <th width="50px">Events</th>
+                                          <th colspan="2" width="120"></th>
+                                          <th width="100">Ticket Type</th>
+                                          <th width="120">Price</th>
+                                          <th width="100" t-if="book_id.is_pay==False"><a t-attf-href="/hotel/list/#{ book_id.id }" class="btn-primary" style="width:40%; height:100%">Edit</a></th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                    <t t-if="event_ids">
+                                        <t t-foreach="event_ids" t-as="evnt_sum">
+                                          <tr>
+                                              <td align="left" width="50px">
+                                                  <span t-field="evnt_sum.product_id.image_small"
+                                                        t-field-options='{"widget": "image", "class": "img-rounded"}'/>
+                                              </td>
+                                              <td align="left" colspan="2" width="120">
+                                                  <b><span t-esc="evnt_sum.product_id.name"/></b>
+                                              </td>
+                                              <td class="text-center" width="100">
+                                                  <b><span t-esc="evnt_sum.name"/></b>
+                                              </td>
+                                              <td class="text-center" width="120">
+                                                <div class="input-group">
+                                                    <b><span style="white-space: nowrap;" t-field="evnt_sum.price_unit"
+                                                            t-field-options='{
+                                                            "widget": "monetary",
+                                                            "display_currency": "book_id.partner_id.property_product_pricelist.currency_id"
+                                                        }'/></b>
+                                                </div>
+                                              </td>
+                                              <td width="100" t-if="book_id.is_pay==False"></td>
+                                          </tr>
+                                        </t>
+                                    </t>
+                                  </tbody>
+                              </table>
+                              <table t-if="accom_ids" class='table table-striped table-condensed' id="cart_products">
+                                  <thead>
+                                      <tr>
+                                          <th width="50px">Rooms</th>
+                                          <th colspan="2" width="120"></th>
+                                          <th width="100">Days</th>
+                                          <th width="120">Price</th>
+                                          <th width="100" t-if="book_id.is_pay==False"><a t-attf-href="/hotel/rooms/#{ book_id.id }" class="btn-primary" style="width:40%; height:100%">Edit</a></th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                    <t t-if="accom_ids">
+                                        <t t-foreach="accom_ids" t-as="accom">
+                                          <tr>
+                                              <td align="left" width="50px">
+                                                  <span t-field="accom.product_id.image_small"
+                                                        t-field-options='{"widget": "image", "class": "img-rounded"}'/>
+
+
+                                              </td>
+                                              <td align="left" colspan="2" width="120">
+                                                  <b><span t-esc="accom.product_id.name"/></b>-
+                                                  <b><span t-esc="accom.product_id.categ_id.name"/></b>
+                                              </td>
+                                              <td class="text-center" width="100">
+                                                  <b><span t-esc="accom.product_uom_qty"/></b>
+                                              </td>
+                                              <td class="text-center" width="120">
+                                                <div class="input-group">
+                                                    <b><span style="white-space: nowrap;" t-field="accom.price_subtotal"
+                                                            t-field-options='{
+                                                            "widget": "monetary",
+                                                            "display_currency": "book_id.partner_id.property_product_pricelist.currency_id"
+                                                        }'/></b>
+                                                </div>
+                                              </td>
+                                              <td width="100" t-if="book_id.is_pay==False"></td>
+                                          </tr>
+                                        </t>
+                                    </t>
+                                  </tbody>
+                              </table>
+                              <table t-if="meals_ids" class='table table-striped table-condensed' id="cart_products">
+                                  <thead>
+                                      <tr>
+                                          <th width="50px">Meals</th>
+                                          <th colspan="2" width="120"></th>
+                                          <th width="100">Days</th>
+                                          <th width="120">Price</th>
+                                          <th width="100" t-if="book_id.is_pay==False"><a t-attf-href="/hotel/meals/#{ book_id.id }" class="btn-primary" style="width:40%; height:100%">Edit</a></th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                    <t t-if="meals_ids">
+                                        <t t-foreach="meals_ids" t-as="meals">
+                                          <tr>
+                                              <td align="left" width="50px">
+                                                  <span t-field="meals.product_id.image_small"
+                                                        t-field-options='{"widget": "image", "class": "img-rounded"}'/>
+
+
+                                              </td>
+                                              <td align="left" colspan="2" width="120">
+                                                  <b><span t-esc="meals.product_id.name"/></b>
+                                              </td>
+                                              <td class="text-center" width="100">
+                                                  <b><span t-esc="meals.product_uom_qty"/></b>
+                                              </td>
+                                              <td class="text-center" width="120">
+                                                <div class="input-group">
+                                                    <b><span style="white-space: nowrap;" t-field="meals.price_subtotal"
+                                                            t-field-options='{
+                                                            "widget": "monetary",
+                                                            "display_currency": "book_id.partner_id.property_product_pricelist.currency_id"
+                                                        }'/></b>
+                                                </div>
+                                              </td>
+                                              <td width="100" t-if="book_id.is_pay==False"></td>
+                                          </tr>
+                                        </t>
+                                    </t>
+                                  </tbody>
+                              </table>
+
+                              <table t-if="service_ids" class='table table-striped table-condensed' id="cart_products">
+                                  <thead>
+                                      <tr>
+                                          <th width="50px">Sevices</th>
+                                          <th colspan="2" width="120"></th>
+                                          <th width="100">Description</th>
+                                          <th width="120">Price</th>
+                                          <th width="100" t-if="book_id.is_pay==False"><a t-attf-href="/hotel/service/#{ book_id.id }" class="btn-primary" style="width:40%; height:100%">Edit</a></th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                    <t t-if="service_ids">
+                                        <t t-foreach="service_ids" t-as="service">
+                                          <tr>
+                                              <td align="left" width="50px">
+                                                  <span t-field="service.product_id.image_small"
+                                                        t-field-options='{"widget": "image", "class": "img-rounded"}'/>
+
+
+                                              </td>
+                                              <td align="left" colspan="2" width="120">
+                                                  <b><span t-esc="service.product_id.name"/></b>
+                                              </td>
+                                              <td class="text-center" width="100">
+                                                  <b><span t-esc="service.name"/></b>
+                                              </td>
+                                              <td class="text-center" width="120">
+                                                <div class="input-group">
+                                                    <b><span style="white-space: nowrap;" t-field="service.price_subtotal"
+                                                            t-field-options='{
+                                                            "widget": "monetary",
+                                                            "display_currency": "book_id.partner_id.property_product_pricelist.currency_id"
+                                                        }'/></b>
+                                                </div>
+                                              </td>
+                                              <td width="100" t-if="book_id.is_pay==False"></td>
+                                          </tr>
+                                        </t>
+                                    </t>
+                                  </tbody>
+                              </table>
+                               <table t-if="amenity_ids" class='table table-striped table-condensed' id="cart_products">
+                                  <thead>
+                                      <tr>
+                                          <th width="50px">Amenities</th>
+                                          <th colspan="2" width="120"></th>
+                                          <th width="100">Description</th>
+                                          <th width="120">Price</th>
+                                          <th width="100" t-if="book_id.is_pay==False"><a t-attf-href="/hotel/aminity/#{ book_id.id }" class="btn-primary" style="width:40%; height:100%">Edit</a></th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                    <t t-if="amenity_ids">
+                                        <t t-foreach="amenity_ids" t-as="amenities">
+                                          <tr>
+                                              <td align="left" width="50px">
+                                                  <span t-field="amenities.product_id.image_small"
+                                                        t-field-options='{"widget": "image", "class": "img-rounded"}'/>
+
+
+                                              </td>
+                                              <td align="left" colspan="2" width="120">
+                                                  <b><span t-esc="amenities.product_id.name"/></b>
+                                              </td>
+                                              <td class="text-center" width="100">
+                                                  <b><span t-esc="amenities.name"/></b>
+                                              </td>
+                                              <td class="text-center" width="120">
+                                                <div class="input-group">
+                                                    <b><span style="white-space: nowrap;" t-field="amenities.price_subtotal"
+                                                            t-field-options='{
+                                                            "widget": "monetary",
+                                                            "display_currency": "book_id.partner_id.property_product_pricelist.currency_id"
+                                                        }'/></b>
+                                                </div>
+                                              </td>
+                                              <td width="100" t-if="book_id.is_pay==False"></td>
+                                          </tr>
+                                        </t>
+                                    </t>
+                                  </tbody>
+                              </table>
+
+                              <div t-if="book_id.id" class="oe_subtotal_footer oe_right" colspan="2" align="right">
+                                <b>Unaxed Amount: <span t-field="book_id.amount_untaxed"
+                                        t-field-options='{
+                                                            "widget": "monetary",
+                                                            "display_currency": "book_id.partner_id.property_product_pricelist.currency_id"
+                                                        }'/>
+                                  <br/>
+                                Taxed Amount: <span t-field="book_id.amount_tax"
+                                            t-field-options='{
+                                                            "widget": "monetary",
+                                                            "display_currency": "book_id.partner_id.property_product_pricelist.currency_id"
+                                                        }'/>
+                                  <br/>
+                                Total Amount: <span t-field="book_id.amount_total"
+                                            t-field-options='{
+                                                            "widget": "monetary",
+                                                            "display_currency": "book_id.partner_id.property_product_pricelist.currency_id"
+                                                        }'/></b>
+                              </div>
+                              <br/>
+                                <form t-attf-action="/reservation/change" method="post">
+                                    <input type="hidden" id="hotel_id" name="hotel_id" t-att-value="book_id.id"/>
+                                    <t t-if="book_id.id"><button t-if="book_id.is_pay==False" type="submit" class="btn btn-default mb32" style="float: left">Cancel Reservation</button></t>
+                                </form>
+                                <form id="cancel_cart_form">
+                                    <t t-if="book_id.id"><a t-if="book_id.is_pay==False" href="#" class="btn btn-primary mb32" style="float: right" data-toggle="modal" data-target="#myModal"><span  /> Continue Reservation</a></t>
+                                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                       <h2 class="modal-title" id="exampleModalLabel">Continue Reservation</h2>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                         <div class="form-group">
+                                                             <b t-if="book_id.is_accom==False"><input  type="radio" id="click_me" name="continue" value="accommodation"/> Want Accommodation<br/><br/></b>
+                                                             <b t-if="book_id.is_meal==False"><input  type="radio" id="click_mels" name="continue" value="food"/> Want Food<br/><br/></b>
+                                                             <b t-if="(prservice_ids or pramenity_ids)"><b t-if=" not (book_id.service_tab and book_id.amenity_tab)"><input  type="radio" id="click_srvc" name="continue" value="Service"/> Want Service and Amenities<br/><br/></b></b>
+                                                             <b t-if="book_id.is_pay==False"><input type="radio" id="click_my" name="continue" value="pay"/> Continue to Pay Amount<br/></b>
+                                                         </div>
+                                                         <div class="modal-footer" >
+                                                              <a t-attf-href="/accommodation" id="show_me" class="btn btn-primary btn-lg pull-right" style="float: right; display:none" ><span  /> Continue </a>
+                                                              <a t-attf-href="/hotelmeals" id="show_mels" class="btn btn-primary btn-lg pull-right" style="float: right; display:none" ><span  /> Continue </a>
+                                                              <a t-attf-href="/hotelservice" id="show_srvc" class="btn btn-primary btn-lg pull-right" style="float: right; display:none" ><span  /> Continue </a>
+                                                              <a t-attf-href="/hotel/payment/#{ book_id.id }" id="show_my" class="btn btn-primary btn-lg pull-right" style="float: right; display:none" ><span  /> payment Option </a>
+                                                         </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </form>
+                          </div>
+                          <div class="clearfix"/>
+                      </div>
+                  </div>
+                </div>
+                <div class="oe_structure">
+                </div>
+              </div>
+           </t>
+         </template>
+
+
+
+    </data>
+</openerp>

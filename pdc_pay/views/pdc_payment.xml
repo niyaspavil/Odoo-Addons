@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<openerp>
+    <data>
+        <menuitem id="pdc_pay_main_menu" parent="base.menu_sales" name="PDC"/>
+
+        <record model="ir.ui.view" id="pdc_payment_form_view">
+            <field name="name">pdc.payment.form</field>
+            <field name="model">pdc.payment</field>
+            <field name="arch" type="xml">
+                <form string="PDC Records">
+                <header>
+                    <button name="action_confirm" string="Confirm" type="object" states="draft" class="oe_highlight"/>
+                    <button name="action_accept" string="Accept"  type="object" states="confirm" class="btn-primary"/>
+                    <button name="action_reject" string="Reject" type="object" states="draft,confirm" class="btn-primary"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirm,rejected,accepted"/>
+                </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <!--<field name="end_date" attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                                <field name="cheque_number"  attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="cheque_type"  attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="journal_id"  attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="payment_method_id" invisible="1"/>
+                                <field name="payment_type"  attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="related_inv_ids" attrs="{'readonly':[('state','!=','draft')]}" domain="[('state','=','open')]"/>
+                            </group>
+                            <group>
+                                <field name="payment_date"  attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="clearing_date" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="amount" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="bank_name" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="branch" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <!--<field name="communication" attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            </group>
+
+                        </group>
+                        <!--<notebook colspan="4">-->
+                        <!--<page string="Invoice Lines">-->
+                            <!--<field name="related_inv_ids" nolabel="1" widget="one2many_list" mode="tree">-->
+                                <!--&lt;!&ndash;domain="[('state','=','open')]" &ndash;&gt;-->
+                                <!--<tree string="Invoice Lines" editable="bottom">-->
+                                    <!--<field name="date_invoice" widget="handle"/>-->
+                                    <!--<field name="partner_id"/>-->
+                                    <!--<field name="name"/>-->
+                                    <!--<field name="origin"/>-->
+                                <!--</tree>-->
+                            <!--</field>-->
+                        <!--</page>-->
+                        <!--</notebook>-->
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="pdc_payment_view_tree" model="ir.ui.view">
+            <field name="name">pdc.payment.tree</field>
+            <field name="model">pdc.payment</field>
+            <field name="arch" type="xml">
+                <tree string="PDC Registers">
+                    <field name="cheque_number"/>
+                    <field name="payment_date"/>
+                    <field name="clearing_date"/>
+                    <field name="bank_name"/>
+                    <field name="branch"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="pdc_payment_act">
+            <field name="name">PDC Payment</field>
+            <field name="res_model">pdc.payment</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="pdc_pay_sub_menu" parent="pdc_pay_main_menu" name="PDC Registers" action="pdc_payment_act"/>
+
+    </data>
+</openerp>

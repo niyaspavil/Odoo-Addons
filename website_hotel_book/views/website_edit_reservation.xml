@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="event_list" name="Reservation event">
+            <!--<script type="text/javascript" src="/website_hotel_book/static/src/js/jquery-1.5.1.min.js"></script>-->
+            <!--<script type="text/javascript" src="/web/static/lib/jquery/jquery.js"></script>-->
+            <t t-call="website.layout">
+              <div id="wrap">
+                  <div class="Counter" id="countdown_div">
+                <div class="left"><p>You have to complete within 30 minutes</p></div>
+               <div class="right" id='countdown' t-if="website.user_id != user_id"></div>
+               </div>
+                <div class="container oe_website_sale">
+
+                  <h1 class="mb32">Event List View</h1>
+                    <form id="event_list_form">
+                      <div class="row">
+                          <div class="col-md-8 col-sm-9 oe_cart">
+
+                              <div >
+                              </div>
+                              <input type="hidden" id="book_id" name="book_id" t-att-value="book_ids.id"/>
+                              <div id="loading" style="width:100%;display:none" align="center"><img src="/website_hotel_book/static/src/img/loading.gif" alt=""/></div>
+                              <table t-if="event_ids" class='table table-striped table-condensed' id="cart_event">
+                                  <thead>
+                                      <tr>
+                                          <th colspan="2" width="120">Events</th>
+                                          <th width="100">Ticket Type</th>
+                                          <th width="120">Price</th>
+                                          <th width="100"></th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                    <t t-if="event_ids">
+                                        <t t-foreach="event_ids" t-as="evnt_sum">
+                                          <tr class="row_select">
+                                              <td align="left" colspan="2" width="120">
+                                                  <b><span t-esc="evnt_sum.event_name.name"/>
+                                                  <input type="hidden" t-att-value="evnt_sum.event_name.id"/></b>
+                                              </td>
+                                              <td class="text-center" width="100">
+                                                  <b><span t-esc="evnt_sum.ticket_type.name"/>
+                                                  <input type="hidden" t-att-value="evnt_sum.ticket_type.id"/></b>
+                                              </td>
+                                              <td class="text-center" width="120">
+                                                <div class="input-group">
+                                                    <b><span style="white-space: nowrap;" t-field="evnt_sum.price"
+                                                            t-field-options='{
+                                                            "widget": "monetary",
+                                                            "display_currency": "book_ids.partner_id.property_product_pricelist.currency_id"
+                                                        }'/><input type="hidden" t-att-value="evnt_sum.price"/></b>
+                                                </div>
+                                              </td>
+                                              <td class="text-center" width="100">
+                                                  <button class="btn_click">
+                                                     <img class="media-object" alt="Delete Event" src="/website_hotel_book/static/src/img/unchecked.gif"/>
+                                                  </button>
+                                              </td>
+                                          </tr>
+                                        </t>
+                                    </t>
+                                  </tbody>
+                              </table>
+                              <a t-if="book_ids.is_pay==False" href="/event" class="btn btn-default mb32" style="float: left"><span />Choose Event</a>
+                              <a t-if="event_ids" t-attf-href="/cart/confirmation/#{book_ids.id}" class="btn btn-primary mb32" style="float: right" ><span  /> Continue Cart</a>
+                          </div>
+                      </div>
+                    </form>
+                </div>
+              </div>
+            </t>
+        </template>
+
+        <template id="service_list" name="Service cart">
+            <!--<script type="text/javascript" src="/website_hotel_book/static/src/js/jquery-1.5.1.min.js"></script>-->
+            <!--<script type="text/javascript" src="/web/static/lib/jquery/jquery.js"></script>-->
+            <t t-call="website.layout">
+              <div id="wrap">
+                  <div class="Counter" id="countdown_div">
+                <div class="left"><p>You have to complete within 30 minutes</p></div>
+               <div class="right" id='countdown' t-if="website.user_id != user_id"></div>
+               </div>
+                <div class="container oe_website_sale">
+
+                  <h1 class="mb32">Services List</h1>
+                      <form id="service_list_form">
+                          <div class="row">
+                              <div class="col-md-8 col-sm-9 oe_cart">
+                                  <div >
+                                  </div>
+                                  <input type="hidden" id="book_id" name="book_id" t-att-value="book_ids.id"/>
+                                  <div id="loading" style="width:100%;display:none" align="center"><img src="/website_hotel_book/static/src/img/loading.gif" alt=""/></div>
+                                  <table t-if="service_ids" class='table table-striped table-condensed' id="cart_service">
+                                      <thead>
+                                          <tr>
+                                              <th colspan="2" width="120">Service</th>
+                                              <th width="100">Description</th>
+                                              <th width="120">Price</th>
+                                              <th width="100"></th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                        <t t-if="service_ids">
+                                            <t t-foreach="service_ids" t-as="service">
+                                              <tr class="row_select">
+                                                  <td align="left" colspan="2" width="120">
+                                                      <b><span t-esc="service.service_name.product_id.name"/>
+                                                      <input type="hidden" t-att-value="service.service_name.id"/></b>
+                                                  </td>
+                                                  <td class="text-center" width="100">
+                                                      <b><span>Services</span>
+                                                      <input type="hidden" t-att-value="service.id"/></b>
+                                                  </td>
+                                                  <td class="text-center" width="120">
+                                                    <div class="input-group">
+                                                        <b><span style="white-space: nowrap;" t-field="service.price"
+                                                                t-field-options='{
+                                                                "widget": "monetary",
+                                                                "display_currency": "book_ids.partner_id.property_product_pricelist.currency_id"
+                                                            }'/><input type="hidden" t-att-value="service.price"/></b>
+                                                    </div>
+                                                  </td>
+                                                  <td class="text-center" width="100">
+                                                      <button class="btn_click">
+                                                         <img class="media-object" alt="Delete Service" src="/website_hotel_book/static/src/img/unchecked.gif"/>
+                                                      </button>
+                                                  </td>
+                                              </tr>
+                                            </t>
+                                        </t>
+                                      </tbody>
+                                  </table>
+                                  <a t-if="book_ids.is_pay==False" t-attf-href="/hotelservice" class="btn btn-default mb32" style="float: left"><span />Choose Service</a>
+                                  <a t-attf-href="/cart/confirmation/#{book_ids.id}" class="btn btn-primary mb32" style="float: right" ><span  /> Continue Cart</a>
+                              </div>
+                          </div>
+                      </form>
+                </div>
+              </div>
+            </t>
+        </template>
+
+        <template id="aminity_list" name="Amenity cart">
+            <!--<script type="text/javascript" src="/website_hotel_book/static/src/js/jquery-1.5.1.min.js"></script>-->
+            <!--<script type="text/javascript" src="/web/static/lib/jquery/jquery.js"></script>-->
+            <t t-call="website.layout">
+              <div id="wrap">
+                  <div class="Counter" id="countdown_div">
+                <div class="left"><p>You have to complete within 30 minutes</p></div>
+               <div class="right" id='countdown' t-if="website.user_id != user_id"></div>
+               </div>
+                <div class="container oe_website_sale">
+
+                  <h1 class="mb32">Amenities List</h1>
+                      <div class="row">
+                          <form id="aminity_list_form">
+                              <div class="col-md-8 col-sm-9 oe_cart">
+                                  <div >
+                                  </div>
+                                  <input type="hidden" id="book_id" name="book_id" t-att-value="book_ids.id"/>
+                                  <div id="loading" style="width:100%;display:none" align="center"><img src="/website_hotel_book/static/src/img/loading.gif" alt=""/></div>
+                                  <table t-if="aminity_ids" class='table table-striped table-condensed' id="cart_aminity">
+                                      <thead>
+                                          <tr>
+                                              <th colspan="2" width="120">Amenities</th>
+                                              <th width="100">Description</th>
+                                              <th width="120">Price</th>
+                                              <th width="100"></th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                        <t t-if="aminity_ids">
+                                            <t t-foreach="aminity_ids" t-as="aminity">
+                                              <tr class="row_select">
+                                                  <td align="left" colspan="2" width="120">
+                                                      <b><span t-esc="aminity.amenities_name.product_id.name"/>
+                                                      <input type="hidden" t-att-value="aminity.amenities_name.id"/></b>
+                                                  </td>
+                                                  <td class="text-center" width="100">
+                                                      <b><span>Amenities</span>
+                                                      <input type="hidden" t-att-value="aminity.id"/></b>
+                                                  </td>
+                                                  <td class="text-center" width="120">
+                                                    <div class="input-group">
+                                                        <b><span style="white-space: nowrap;" t-field="aminity.price"
+                                                                t-field-options='{
+                                                                "widget": "monetary",
+                                                                "display_currency": "book_ids.partner_id.property_product_pricelist.currency_id"
+                                                            }'/><input type="hidden" t-att-value="aminity.price"/></b>
+                                                    </div>
+                                                  </td>
+                                                  <td class="text-center" width="100">
+                                                      <button class="btn_click">
+                                                         <img class="media-object" alt="Delete Service" src="/website_hotel_book/static/src/img/unchecked.gif"/>
+                                                      </button>
+                                                  </td>
+                                              </tr>
+                                            </t>
+                                        </t>
+                                      </tbody>
+                                  </table>
+                                  <a t-if="book_ids.is_pay==False" t-attf-href="/hotelservice" class="btn btn-default mb32" style="float: left"><span />Choose Amenities</a>
+                                  <a t-attf-href="/cart/confirmation/#{book_ids.id}" class="btn btn-primary mb32" style="float: right" ><span  /> Continue Cart</a>
+                              </div>
+                          </form>
+                      </div>
+                </div>
+              </div>
+            </t>
+        </template>
+
+        <template id="room_list" name="Room cart">
+            <!--<script type="text/javascript" src="/website_hotel_book/static/src/js/jquery-1.5.1.min.js"></script>-->
+            <!--<script type="text/javascript" src="/web/static/lib/jquery/jquery.js"></script>-->
+            <t t-call="website.layout">
+              <div id="wrap">
+                  <div class="Counter" id="countdown_div">
+                <div class="left"><p>You have to complete within 30 minutes</p></div>
+               <div class="right" id='countdown' t-if="website.user_id != user_id"></div>
+               </div>
+                <div class="container oe_website_sale">
+
+                  <h1 class="mb32">Accommodation List</h1>
+                      <div class="row">
+                          <form id="formroom">
+                              <div class="col-md-8 col-sm-9 oe_cart">
+                                  <div >
+                                  </div>
+                                  <input type="hidden" id="book_id" name="book_id" t-att-value="book_ids.id"/>
+                                  <div id="loading" style="width:100%;display:none" align="center"><img src="/website_hotel_book/static/src/img/loading.gif" alt=""/></div>
+                                  <table id="grid_basic" class="table table-condensed table-hover table-striped" style="width:100%">
+                                        <thead><tr><th>Date</th><th>Accommodation Type</th><th>Rooms</th><th>Price</th><th></th><th></th></tr></thead>
+                                        <t t-foreach="book_ids.accom_tab or []" t-as="rooms">
+                                            <tr>
+                                                <td><span t-esc="rooms.accom_date"/><input type="hidden" t-att-value="rooms.id"/> </td>
+                                                <td class="type_select"><select name="accom_type" class="form-control type-select">
+                                                      <option t-att-value="rooms.accom_type.id"><t t-esc="rooms.accom_type.name"/></option>
+                                                      <t t-foreach="categories or []" t-as="type">
+                                                          <option t-if="type.id!=rooms.accom_type.id" t-att-value="type.id" ><t t-esc="type.name"/></option>
+                                                      </t>
+                                                  </select></td>
+                                                <td class="room_select"><h4><span t-esc="rooms.bed_type.name"/></h4><input type="hidden" t-att-value="rooms.bed_type.id"/></td>
+                                                <td><span t-esc="rooms.cost"/></td>
+                                                <td><button class="btn btn-primary1">Change</button></td>
+                                                <td class="text-center" width="100">
+                                                  <!--<button class="btn_click">-->
+                                                     <!--<img class="media-object" alt="Delete Accommodation" src="/website_hotel_book/static/src/img/unchecked.gif"/>-->
+                                                  <!--</button>-->
+                                                </td>
+                                            </tr>
+                                        </t>
+                                  </table>
+                                  <a t-attf-href="/cart/confirmation/#{book_ids.id}" class="btn btn-primary mb32" style="float: right" ><span  /> Continue Cart</a>
+                              </div>
+                          </form>
+                      </div>
+                </div>
+              </div>
+            </t>
+        </template>
+
+        <template id="meals_list" name="Meals cart">
+            <!--<script type="text/javascript" src="/website_hotel_book/static/src/js/jquery-1.5.1.min.js"></script>-->
+            <!--<script type="text/javascript" src="/web/static/lib/jquery/jquery.js"></script>-->
+            <t t-call="website.layout">
+              <div id="wrap">
+                  <div class="Counter" id="countdown_div">
+                <div class="left"><p>You have to complete within 30 minutes</p></div>
+               <div class="right" id='countdown' t-if="website.user_id != user_id"></div>
+               </div>
+                <div class="container oe_website_sale">
+
+                  <h1 class="mb32">Accommodation List</h1>
+                      <div class="row">
+                          <form id="formmeal">
+                              <div class="col-md-8 col-sm-9 oe_cart">
+                                  <div >
+                                  </div>
+                                  <input type="hidden" id="book_id" name="book_id" t-att-value="book_ids.id"/>
+                                  <div id="loading" style="width:100%;display:none" align="center"><img src="/website_hotel_book/static/src/img/loading.gif" alt=""/></div>
+                                  <table id="grid_basic" class="table table-condensed table-hover table-striped" style="width:100%">
+                                        <thead><tr><th>Date</th><th>Breakfast</th><th>Lunch</th><th>Dinner</th><th></th><th></th></tr></thead>
+                                        <t t-foreach="meals_ids or []" t-as="meals">
+                                            <tr>
+                                                <td><span t-esc="meals.meals_date"/><input type="hidden" t-att-value="meals.id"/> </td>
+                                                <td><input t-if="meals.breakfast==True" class="fast_select" type="checkbox" checked="checked" disabled="true"/><input t-if="meals.breakfast==False" class="fast_select" type="checkbox" disabled="true"/></td>
+                                                <td><input t-if="meals.lunch==True" class="lunch_select" type="checkbox" checked="checked" disabled="true"/><input t-if="meals.lunch==False" class="lunch_select" type="checkbox" disabled="true"/></td>
+                                                <td><input t-if="meals.dinner==True" class="dinner_select" type="checkbox" checked="checked" disabled="true"/><input t-if="meals.dinner==False" class="dinner_select" type="checkbox" disabled="true"/></td>
+                                                <td><button class="btn btn-primary1">Change</button></td>
+                                                <td></td>
+                                            </tr>
+                                        </t>
+                                  </table>
+                                  <a t-attf-href="/cart/confirmation/#{book_ids.id}" class="btn btn-primary mb32" style="float: right" ><span  /> Continue Cart</a>
+                              </div>
+                          </form>
+                      </div>
+                </div>
+              </div>
+            </t>
+        </template>
+
+    </data>
+</openerp>
